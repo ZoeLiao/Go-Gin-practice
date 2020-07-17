@@ -7,15 +7,24 @@ import (
     "github.com/gin-gonic/gin"
 )
 
+type URL struct {
+    URL string `json:"url" form:"url"`
+}
+
 func DownloadVideo(c *gin.Context) {
-    url := c.PostForm("url")
+    var URL URL
+    c.BindJSON(&URL)
+    url := URL.URL
     resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+    if err != nil {
+        fmt.Println(err)
+        c.JSON(
+            http.StatusOK,
+            gin.H{"message": err},
+        )
+    }
     body, err := ioutil.ReadAll(resp.Body)
-	fmt.Printf("found: %s %q\n", url, body)
+    fmt.Printf("found: %s %q\n", url, body)
 
     c.JSON(
         http.StatusOK,
@@ -36,7 +45,7 @@ func main() {
     v1 := router.Group("/api/v1/video")
     {
         v1.GET("/:name", Test)
-        v1.POST("/:url", DownloadVideo)
+        v1.POST("/", DownloadVideo)
     }
     router.Run(":8080")
 }
