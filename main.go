@@ -11,25 +11,34 @@ type URL struct {
     URL string `json:"url" form:"url"`
 }
 
-func DownloadVideo(c *gin.Context) {
+func DownloadURL(c *gin.Context) {
     var URL URL
     c.BindJSON(&URL)
     url := URL.URL
     resp, err := http.Get(url)
     if err != nil {
-        fmt.Println(err)
+        fmt.Errorf("Error: %s", err)
         c.JSON(
             http.StatusOK,
             gin.H{"message": err},
         )
+    } else {
+        defer resp.Body.Close()
+        body, err := ioutil.ReadAll(resp.Body)
+        if err != nil {
+            fmt.Errorf("Error: %s", err)
+            c.JSON(
+                http.StatusOK,
+                gin.H{"message": err},
+            )
+        } else {
+            fmt.Printf("found: %s %q\n", url, body)
+            c.JSON(
+                http.StatusOK,
+                gin.H{"message": body},
+            )
+        }
     }
-    body, err := ioutil.ReadAll(resp.Body)
-    fmt.Printf("found: %s %q\n", url, body)
-
-    c.JSON(
-        http.StatusOK,
-        gin.H{"message": body},
-    )
 }
 
 func Test(c *gin.Context) {
@@ -42,10 +51,10 @@ func Test(c *gin.Context) {
 
 func main() {
     router := gin.Default()
-    v1 := router.Group("/api/v1/video")
+    v1 := router.Group("/api/v1/download")
     {
         v1.GET("/:name", Test)
-        v1.POST("/", DownloadVideo)
+        v1.POST("/", DownloadURL)
     }
     router.Run(":8080")
 }
