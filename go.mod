@@ -5,6 +5,7 @@ go 1.12
 require (
 	cloud.google.com/go v0.61.0 // indirect
 	cloud.google.com/go/bigquery v1.9.0 // indirect
+	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/cncf/udpa/go v0.0.0-20200629203442-efcf912fb354 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/creack/pty v1.1.11 // indirect
@@ -30,7 +31,7 @@ require (
 	github.com/spf13/afero v1.3.2 // indirect
 	github.com/stretchr/objx v0.3.0 // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
-	github.com/swaggo/swag v1.6.7 // indirect
+	github.com/swaggo/swag v1.6.7
 	github.com/urfave/cli/v2 v2.2.0 // indirect
 	github.com/yuin/goldmark v1.1.33 // indirect
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect
