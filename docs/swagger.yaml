@@ -1,5 +1,52 @@
+basePath: /api/v1/
+definitions:
+  main.URL:
+    properties:
+      url:
+        type: string
+    type: object
+host: localhost:8080
 info:
   contact: {}
   license: {}
-paths: {}
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /download:
+    post:
+      consumes:
+      - application/json
+      description: test
+      parameters:
+      - description: url
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/main.URL'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+  /download/{name}:
+    get:
+      consumes:
+      - application/json
+      description: test
+      parameters:
+      - description: name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
 swagger: "2.0"

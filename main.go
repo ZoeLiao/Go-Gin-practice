@@ -15,6 +15,14 @@ type URL struct {
     URL string `json:"url" form:"url"`
 }
 
+// Test example
+// @Description test
+// @name test name 
+// @Accept  json
+// @Produce  json
+// @Param message body main.URL true "url"
+// @Success 200 {string} string	"ok"
+// @Router /download [post]
 func DownloadURL(c *gin.Context) {
     var URL URL
     c.BindJSON(&URL)
@@ -45,6 +53,14 @@ func DownloadURL(c *gin.Context) {
     }
 }
 
+// Test example
+// @Description test
+// @name test name 
+// @Accept  json
+// @Produce  json
+// @Param   name     path    string     true        "name"
+// @Success 200 {string} string	"ok"
+// @Router /download/{name} [get]
 func Test(c *gin.Context) {
     name := c.Param("name")
     c.JSON(
