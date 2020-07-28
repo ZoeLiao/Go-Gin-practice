@@ -1,4 +1,4 @@
-module github.com/ZoeLiao/Go-Gin-practice
+module Go-Gin-practice
 
 go 1.12
 
@@ -21,6 +21,7 @@ require (
 	github.com/google/gofuzz v1.1.0 // indirect
 	github.com/iancoleman/strcase v0.0.0-20191112232945-16388991a334 // indirect
 	github.com/ianlancetaylor/demangle v0.0.0-20200715173712-053cf528c12f // indirect
+	github.com/jinzhu/gorm v1.9.15
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
@@ -32,6 +33,8 @@ require (
 	github.com/spf13/afero v1.3.2 // indirect
 	github.com/stretchr/objx v0.3.0 // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
+	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
+	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.7
 	github.com/urfave/cli/v2 v2.2.0 // indirect
 	github.com/yuin/goldmark v1.1.33 // indirect

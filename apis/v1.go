@@ -5,11 +5,9 @@ import (
     "io/ioutil"
     "net/http"
     "github.com/gin-gonic/gin"
+    "Go-Gin-practice/models"
 )
 
-type URL struct {
-    URL string `json:"url" form:"url"`
-}
 
 // Test example
 // @Description test
@@ -20,7 +18,7 @@ type URL struct {
 // @Success 200 {string} string	"ok"
 // @Router /download [post]
 func DownloadURL(c *gin.Context) {
-    var URL URL
+    var URL models.URL
     c.BindJSON(&URL)
     url := URL.URL
     resp, err := http.Get(url)
@@ -43,7 +41,7 @@ func DownloadURL(c *gin.Context) {
             fmt.Printf("found: %s %q\n", url, body)
             c.JSON(
                 http.StatusOK,
-                gin.H{"message": body},
+                gin.H{"url": url, "body": body},
             )
         }
     }
