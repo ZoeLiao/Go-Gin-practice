@@ -22,6 +22,16 @@ func DownloadURL(c *gin.Context) {
     var URL models.URL
     c.BindJSON(&URL)
     url := URL.URL
+
+    notHas := global.GVA_DB.Where("url = ?", url).Find(&URL).RecordNotFound()
+    if !notHas {
+        c.JSON(
+            http.StatusOK,
+            gin.H{"url": url, "res": "Already exists"},
+        )
+        return
+    }
+
     resp, err := http.Get(url)
     if err != nil {
         fmt.Errorf("Error: %s", err)
@@ -29,36 +39,30 @@ func DownloadURL(c *gin.Context) {
             http.StatusOK,
             gin.H{"message": err},
         )
+        return
+    }
+
+    defer resp.Body.Close()
+    body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Errorf("Error: %s", err)
+        c.JSON(
+            http.StatusOK,
+            gin.H{"message": err},
+        )
     } else {
-        defer resp.Body.Close()
-        body, err := ioutil.ReadAll(resp.Body)
+        fmt.Printf("found: %s %q\n", url, body)
+        err = global.GVA_DB.Create(&URL).Error
         if err != nil {
-            fmt.Errorf("Error: %s", err)
             c.JSON(
                 http.StatusOK,
-                gin.H{"message": err},
+                gin.H{"url": url, "res": "Failed to create URL"},
             )
         } else {
-            fmt.Printf("found: %s %q\n", url, body)
-            notHas := global.GVA_DB.Where("url = ?", url).Find(&URL).RecordNotFound()
-            if !notHas {
-                c.JSON(
-                    http.StatusOK,
-                    gin.H{"url": url, "res": "Already exists"},
-                )
-            }
-            err = global.GVA_DB.Create(&URL).Error
-            if err {
-                c.JSON(
-                    http.StatusOK,
-                    gin.H{"url": url, "res": "Failed to create URL"},
-                )
-            } else {
-                c.JSON(
-                    http.StatusOK,
-                    gin.H{"url": url, "body": body},
-                )
-            }
+            c.JSON(
+                http.StatusOK,
+                gin.H{"url": url, "body": body},
+            )
         }
     }
 }
