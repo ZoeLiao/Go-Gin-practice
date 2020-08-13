@@ -6,6 +6,7 @@ import (
     "net/http"
     "github.com/gin-gonic/gin"
     "Go-Gin-practice/models"
+    "Go-Gin-practice/global"
 )
 
 
@@ -39,10 +40,25 @@ func DownloadURL(c *gin.Context) {
             )
         } else {
             fmt.Printf("found: %s %q\n", url, body)
-            c.JSON(
-                http.StatusOK,
-                gin.H{"url": url, "body": body},
-            )
+            notHas := global.GVA_DB.Where("url = ?", url).Find(&URL).RecordNotFound()
+            if !notHas {
+                c.JSON(
+                    http.StatusOK,
+                    gin.H{"url": url, "res": "Already exists"},
+                )
+            }
+            err = global.GVA_DB.Create(&URL).Error
+            if err {
+                c.JSON(
+                    http.StatusOK,
+                    gin.H{"url": url, "res": "Failed to create URL"},
+                )
+            } else {
+                c.JSON(
+                    http.StatusOK,
+                    gin.H{"url": url, "body": body},
+                )
+            }
         }
     }
 }
