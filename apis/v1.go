@@ -17,11 +17,11 @@ import (
 // @Produce  json
 // @Param message body main.URL true "url"
 // @Success 200 {string} string	"ok"
-// @Router /download [post]
-func DownloadURL(c *gin.Context) {
+// @Router /shortner [post]
+func shortener(c *gin.Context) {
     var URL models.URL
     c.BindJSON(&URL)
-    url := URL.URL
+    url := URL.Url
 
     notHas := global.GVA_DB.Where("url = ?", url).Find(&URL).RecordNotFound()
     if !notHas {
@@ -74,11 +74,21 @@ func DownloadURL(c *gin.Context) {
 // @Produce  json
 // @Param   name     path    string     true        "name"
 // @Success 200 {string} string	"ok"
-// @Router /download/{name} [get]
+// @Router /shortener/{path} [get]
 func Test(c *gin.Context) {
-    name := c.Param("name")
+    path := c.Param("path")
+    var URL models.URL
+    c.BindJSON(&URL)
+    obj := global.GVA_DB.Where("path = ?", path).Find(&URL).RecordNotFound()
+    if obj == nil {
+        c.JSON(
+            http.StatusOK,
+            gin.H{"path": path, "res": "Path not found"},
+        )
+        return
+    }
     c.JSON(
         http.StatusOK,
-        gin.H{"message": name},
+        gin.H{"path": path, "url": obj.url},
     )
 }

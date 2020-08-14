@@ -7,5 +7,6 @@ import (
 
 type URL struct {
     gorm.Model
-    URL string `json:"url"`
+    Url string `json:"url"`
+    Path string `json:"path"`
 }
