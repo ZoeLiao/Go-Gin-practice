@@ -1,7 +1,9 @@
 basePath: /api/v1/
 definitions:
-  main.URL:
+  models.URL:
     properties:
+      path:
+        type: string
       url:
         type: string
     type: object
@@ -12,7 +14,7 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
-  /download:
+  /shortener:
     post:
       consumes:
       - application/json
@@ -23,7 +25,7 @@ paths:
         name: message
         required: true
         schema:
-          $ref: '#/definitions/main.URL'
+          $ref: '#/definitions/models.URL'
       produces:
       - application/json
       responses:
@@ -31,15 +33,15 @@ paths:
           description: ok
           schema:
             type: string
-  /download/{name}:
+  /shortener/{path}:
     get:
       consumes:
       - application/json
       description: test
       parameters:
-      - description: name
+      - description: path
         in: path
-        name: name
+        name: path
         required: true
         type: string
       produces:

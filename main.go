@@ -23,10 +23,10 @@ func main() {
     router := gin.Default()
     api_v1 := router.Group("/api/v1")
     {
-        download := api_v1.Group("/download")
+        shortener := api_v1.Group("/shortener")
         {
-            download.GET("/:name", v1.Test)
-            download.POST("/", v1.DownloadURL)
+            shortener.GET("/:path", v1.GetURL)
+            shortener.POST("", v1.CreateURL)
         }
     }
     url := ginSwagger.URL("http://localhost:8080/swagger/doc.json") // The url pointing to API definition

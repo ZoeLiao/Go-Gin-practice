@@ -15,14 +15,13 @@ import (
 // @name test name 
 // @Accept  json
 // @Produce  json
-// @Param message body main.URL true "url"
+// @Param message body models.URL true "url"
 // @Success 200 {string} string	"ok"
-// @Router /shortner [post]
-func shortener(c *gin.Context) {
+// @Router /shortener [post]
+func CreateURL(c *gin.Context) {
     var URL models.URL
     c.BindJSON(&URL)
     url := URL.Url
-
     notHas := global.GVA_DB.Where("url = ?", url).Find(&URL).RecordNotFound()
     if !notHas {
         c.JSON(
@@ -72,23 +71,22 @@ func shortener(c *gin.Context) {
 // @name test name 
 // @Accept  json
 // @Produce  json
-// @Param   name     path    string     true        "name"
+// @Param   path     path    string     true        "path"
 // @Success 200 {string} string	"ok"
 // @Router /shortener/{path} [get]
-func Test(c *gin.Context) {
+func GetURL(c *gin.Context) {
     path := c.Param("path")
     var URL models.URL
-    c.BindJSON(&URL)
-    obj := global.GVA_DB.Where("path = ?", path).Find(&URL).RecordNotFound()
-    if obj == nil {
+    res := global.GVA_DB.Where("path = ?", path).First(&URL)
+    if res.Error != nil {
         c.JSON(
             http.StatusOK,
-            gin.H{"path": path, "res": "Path not found"},
+            gin.H{"path": path, "res": "Path not found", "error": res.Error},
         )
         return
     }
     c.JSON(
         http.StatusOK,
-        gin.H{"path": path, "url": obj.url},
+        gin.H{"path": path, "url": URL.Url},
     )
 }

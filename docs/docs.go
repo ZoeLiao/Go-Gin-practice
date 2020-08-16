@@ -25,7 +25,7 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/download": {
+        "/shortener": {
             "post": {
                 "description": "test",
                 "consumes": [
@@ -41,7 +41,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.URL"
+                            "$ref": "#/definitions/models.URL"
                         }
                     }
                 ],
@@ -55,7 +55,7 @@ var doc = `{
                 }
             }
         },
-        "/download/{name}": {
+        "/shortener/{path}": {
             "get": {
                 "description": "test",
                 "consumes": [
@@ -67,8 +67,8 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "name",
-                        "name": "name",
+                        "description": "path",
+                        "name": "path",
                         "in": "path",
                         "required": true
                     }
@@ -85,9 +85,12 @@ var doc = `{
         }
     },
     "definitions": {
-        "main.URL": {
+        "models.URL": {
             "type": "object",
             "properties": {
+                "path": {
+                    "type": "string"
+                },
                 "url": {
                     "type": "string"
                 }
