@@ -27,6 +27,8 @@ require (
 	github.com/kr/text v0.2.0 // indirect
 	github.com/lyft/protoc-gen-star v0.4.15 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
+	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
+	github.com/phuslu/log v1.0.37
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkg/sftp v1.11.0 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect

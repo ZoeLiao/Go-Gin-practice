@@ -1,13 +1,16 @@
 package v1
 
 import (
-    "fmt"
     "io/ioutil"
     "net/http"
     "github.com/gin-gonic/gin"
+    "github.com/op/go-logging"
     "Go-Gin-practice/models"
     "Go-Gin-practice/global"
 )
+
+
+var log = logging.MustGetLogger("example")
 
 
 // Test example
@@ -24,6 +27,7 @@ func CreateURL(c *gin.Context) {
     url := URL.Url
     notHas := global.GVA_DB.Where("url = ?", url).Find(&URL).RecordNotFound()
     if !notHas {
+        log.Info("url: %s Already exists.", url)
         c.JSON(
             http.StatusOK,
             gin.H{"url": url, "res": "Already exists"},
@@ -33,7 +37,7 @@ func CreateURL(c *gin.Context) {
 
     resp, err := http.Get(url)
     if err != nil {
-        fmt.Errorf("Error: %s", err)
+        log.Error(err)
         c.JSON(
             http.StatusOK,
             gin.H{"message": err},
@@ -44,15 +48,15 @@ func CreateURL(c *gin.Context) {
     defer resp.Body.Close()
     body, err := ioutil.ReadAll(resp.Body)
     if err != nil {
-        fmt.Errorf("Error: %s", err)
+        log.Error(err)
         c.JSON(
             http.StatusOK,
             gin.H{"message": err},
         )
     } else {
-        fmt.Printf("found: %s %q\n", url, body)
         err = global.GVA_DB.Create(&URL).Error
         if err != nil {
+            log.Error(err)
             c.JSON(
                 http.StatusOK,
                 gin.H{"url": url, "res": "Failed to create URL"},
@@ -79,6 +83,7 @@ func GetURL(c *gin.Context) {
     var URL models.URL
     res := global.GVA_DB.Where("path = ?", path).First(&URL)
     if res.Error != nil {
+        log.Error(res.Error)
         c.JSON(
             http.StatusOK,
             gin.H{"path": path, "res": "Path not found", "error": res.Error},
