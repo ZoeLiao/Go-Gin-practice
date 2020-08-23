@@ -25,6 +25,8 @@ require (
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
+	github.com/lestrrat/go-file-rotatelogs v0.0.0-20180223000712-d3151e2a480f
+	github.com/lestrrat/go-strftime v0.0.0-20180220042222-ba3bf9c1d042 // indirect
 	github.com/lyft/protoc-gen-star v0.4.15 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
