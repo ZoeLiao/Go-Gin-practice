@@ -5,6 +5,9 @@ Gin + Swaggo (Swagger) + gorm (CRUD) + testify + log
 - `go run main.go`
 - Swagger: `swag init`
 
+## Test
+- `go test`
+
 ## TO-DO List
 - [x] Use [Gin](https://github.com/gin-gonic/gin)
 - [x] Use [Swagger](https://github.com/swaggo/swag)
