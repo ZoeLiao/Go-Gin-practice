@@ -1,11 +1,10 @@
 package core
 
 import (
-	"os"
+	"Go-Gin-practice/global"
 	"github.com/op/go-logging"
-    "Go-Gin-practice/global"
+	"os"
 )
-
 
 var logger = logging.MustGetLogger("example")
 
@@ -17,7 +16,7 @@ var format = logging.MustStringFormatter(
 )
 
 func Init() {
-    // For demo purposes, create two backend for os.Stderr.
+	// For demo purposes, create two backend for os.Stderr.
 	backend1 := logging.NewLogBackend(os.Stderr, "", 0)
 	backend2 := logging.NewLogBackend(os.Stderr, "", 0)
 
@@ -32,5 +31,5 @@ func Init() {
 
 	// Set the backends to be used.
 	logging.SetBackend(backend1Leveled, backend2Formatter)
-    global.GVA_LOG = logger
+	global.GVA_LOG = logger
 }

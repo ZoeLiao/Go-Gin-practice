@@ -8,6 +8,11 @@ Gin + Swaggo (Swagger) + gorm (CRUD) + testify + log
 ## Swagger
 - Swagger: `swag init`
 
+## Check
+- `brew install pre-commit`
+- `pre-commit install`
+- `pre-commit run --all-files`
+
 ## Test
 - `go test`
 

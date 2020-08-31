@@ -1,9 +1,8 @@
 package main
 
 import (
-    "Go-Gin-practice/router"
+	"Go-Gin-practice/router"
 )
-
 
 func main() {
 	r := router.SetupRouter()
