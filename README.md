@@ -3,6 +3,9 @@ Gin + Swaggo (Swagger) + gorm (CRUD) + testify + log
 
 ## Set up
 - `go run main.go`
+- Visit [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
+
+## Swagger
 - Swagger: `swag init`
 
 ## Test
