@@ -14,7 +14,7 @@ Gin + Swaggo (Swagger) + gorm (CRUD) + testify + log
 - `pre-commit run --all-files`
 
 ## Test
-- `go test`
+- `go test tests/*.go`
 
 ## TO-DO List
 - [x] Use [Gin](https://github.com/gin-gonic/gin)
