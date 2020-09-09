@@ -15,6 +15,24 @@ info:
   version: "1.0"
 paths:
   /shortener:
+    patch:
+      consumes:
+      - application/json
+      description: test
+      parameters:
+      - description: url
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/models.URL'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
     post:
       consumes:
       - application/json

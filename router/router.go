@@ -17,10 +17,6 @@ func init_db() {
 	core.Init()
 }
 
-// @title Swagger Example API
-// @version 1.0
-// @host localhost:8080
-// @BasePath /api/v1/
 func SetupRouter() *gin.Engine {
 	init_db()
 	router := gin.Default()
@@ -30,9 +26,17 @@ func SetupRouter() *gin.Engine {
 		{
 			shortener.GET("/:path", v1.GetURL)
 			shortener.POST("", v1.CreateURL)
+			shortener.PATCH("", v1.UpdateURL)
 		}
 	}
 	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json") // The url pointing to API definition
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+
+	// 404
+	router.NoRoute(func(c *gin.Context) {
+		c.JSON(
+			404,
+			gin.H{"message": "Oops! Page not found"})
+	})
 	return router
 }
