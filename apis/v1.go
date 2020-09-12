@@ -13,6 +13,30 @@ import (
 // @name test name
 // @Accept  json
 // @Produce  json
+// @Success 200 {string} string	"ok"
+// @Router /shorteners [get]
+func GetURLList(c *gin.Context) {
+	var URLs models.URL
+	res := global.GVA_DB.Find(&URLs)
+	if res.Error != nil {
+		global.GVA_LOG.Error("Error:", res.Error)
+		c.JSON(
+			http.StatusOK,
+			gin.H{"res": "Fialed to get path list", "error": res.Error},
+		)
+		return
+	}
+	c.JSON(
+		http.StatusOK,
+		gin.H{"path": res},
+	)
+}
+
+// Test example
+// @Description test
+// @name test name
+// @Accept  json
+// @Produce  json
 // @Param message body models.URL true "url"
 // @Success 200 {string} string	"ok"
 // @Router /shortener [post]
@@ -106,10 +130,10 @@ func UpdateURL(c *gin.Context) {
 	url := URL.Url
 	notHas := global.GVA_DB.Where("path = ?", path).Find(&URL).RecordNotFound()
 	if !notHas {
-		global.GVA_LOG.Info("path: ", path, " URL not found.")
+		global.GVA_LOG.Info("path: ", path, " path not found.")
 		c.JSON(
 			http.StatusOK,
-			gin.H{"path": path, "res": "URL not found"},
+			gin.H{"path": path, "res": "path not found"},
 		)
 		return
 	}
@@ -119,7 +143,7 @@ func UpdateURL(c *gin.Context) {
 		global.GVA_LOG.Error(err)
 		c.JSON(
 			http.StatusOK,
-			gin.H{"message": err},
+			gin.H{"res": err},
 		)
 		return
 	}
@@ -130,7 +154,7 @@ func UpdateURL(c *gin.Context) {
 		global.GVA_LOG.Error(err)
 		c.JSON(
 			http.StatusOK,
-			gin.H{"message": err},
+			gin.H{"res": err},
 		)
 	} else {
 		err = global.GVA_DB.Update(&URL).Error
@@ -146,5 +170,43 @@ func UpdateURL(c *gin.Context) {
 				gin.H{"url": url, "body": body},
 			)
 		}
+	}
+}
+
+// Test example
+// @Description test
+// @name test name
+// @Accept  json
+// @Produce  json
+// @Param message body models.URL true "url"
+// @Success 200 {string} string	"ok"
+// @Router /shortener [delete]
+func DeleteURL(c *gin.Context) {
+	var URL models.URL
+	c.BindJSON(&URL)
+	path := URL.Path
+	url := URL.Url
+	notHas := global.GVA_DB.Where("path = ?", path).Find(&URL).RecordNotFound()
+	if !notHas {
+		global.GVA_LOG.Info("path: ", path, " path not found.")
+		c.JSON(
+			http.StatusOK,
+			gin.H{"path": path, "res": "path not found"},
+		)
+		return
+	}
+
+	err := global.GVA_DB.Delete(&URL, 1).Error
+	if err != nil {
+		global.GVA_LOG.Error(err)
+		c.JSON(
+			http.StatusOK,
+			gin.H{"url": url, "res": "Failed to delete URL"},
+		)
+	} else {
+		c.JSON(
+			http.StatusOK,
+			gin.H{"url": url, "res": "Delete successfully"},
+		)
 	}
 }
