@@ -24,10 +24,6 @@ func SetupRouter() *gin.Engine {
 		{
 			shorteners.GET("", v1.GetURLList)
 		}
-		shorteners := api_v1.Group("/shorteners")
-		{
-			shorteners.GET("", v1.GetURLList)
-		}
 	}
 	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json") // The url pointing to API definition
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
