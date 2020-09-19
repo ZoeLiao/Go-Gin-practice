@@ -128,12 +128,12 @@ func UpdateURL(c *gin.Context) {
 	c.BindJSON(&URL)
 	path := URL.Path
 	url := URL.Url
-	notHas := global.GVA_DB.Where("path = ?", path).Find(&URL).RecordNotFound()
-	if !notHas {
-		global.GVA_LOG.Info("path: ", path, " path not found.")
+	res := global.GVA_DB.Where("path = ?", path).First(&URL)
+	if res.Error != nil {
+		global.GVA_LOG.Error("Error:", res.Error)
 		c.JSON(
 			http.StatusOK,
-			gin.H{"path": path, "res": "path not found"},
+			gin.H{"path": path, "res": "Path not found", "error": res.Error},
 		)
 		return
 	}
@@ -157,7 +157,7 @@ func UpdateURL(c *gin.Context) {
 			gin.H{"res": err},
 		)
 	} else {
-		err = global.GVA_DB.Update(&URL).Error
+		err := global.GVA_DB.Model(&URL).Where("path = ?", path).Update("url", url).Error
 		if err != nil {
 			global.GVA_LOG.Error(err)
 			c.JSON(
@@ -178,35 +178,33 @@ func UpdateURL(c *gin.Context) {
 // @name test name
 // @Accept  json
 // @Produce  json
-// @Param message body models.URL true "url"
 // @Success 200 {string} string	"ok"
-// @Router /shortener [delete]
+// @Param   path     path    string     true        "path"
+// @Router /shortener/{path} [delete]
 func DeleteURL(c *gin.Context) {
+	path := c.Param("path")
 	var URL models.URL
-	c.BindJSON(&URL)
-	path := URL.Path
-	url := URL.Url
-	notHas := global.GVA_DB.Where("path = ?", path).Find(&URL).RecordNotFound()
-	if !notHas {
-		global.GVA_LOG.Info("path: ", path, " path not found.")
+	res := global.GVA_DB.Where("path = ?", path).First(&URL)
+	if res.Error != nil {
+		global.GVA_LOG.Error("Error:", res.Error)
 		c.JSON(
 			http.StatusOK,
-			gin.H{"path": path, "res": "path not found"},
+			gin.H{"path": path, "res": "Path not found", "error": res.Error},
 		)
 		return
 	}
 
-	err := global.GVA_DB.Delete(&URL, 1).Error
+	err := global.GVA_DB.Where("path = ?", path).Delete(&URL).Error
 	if err != nil {
 		global.GVA_LOG.Error(err)
 		c.JSON(
 			http.StatusOK,
-			gin.H{"url": url, "res": "Failed to delete URL"},
+			gin.H{"path": path, "res": "Failed to delete URL"},
 		)
 	} else {
 		c.JSON(
 			http.StatusOK,
-			gin.H{"url": url, "res": "Delete successfully"},
+			gin.H{"path": path, "res": "Delete successfully"},
 		)
 	}
 }

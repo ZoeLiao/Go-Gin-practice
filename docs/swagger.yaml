@@ -70,6 +70,23 @@ paths:
           schema:
             type: string
   /shortener/{path}:
+    delete:
+      consumes:
+      - application/json
+      description: test
+      parameters:
+      - description: path
+        in: path
+        name: path
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
     get:
       consumes:
       - application/json

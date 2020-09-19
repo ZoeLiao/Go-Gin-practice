@@ -15,9 +15,14 @@ func SetupRouter() *gin.Engine {
 		shortener := api_v1.Group("/shortener")
 		{
 			shortener.GET("/:path", v1.GetURL)
+			shortener.DELETE("/:path", v1.DeleteURL)
 			shortener.POST("", v1.CreateURL)
 			shortener.PATCH("", v1.UpdateURL)
 			shortener.DELETE("", v1.DeleteURL)
+		}
+		shorteners := api_v1.Group("/shorteners")
+		{
+			shorteners.GET("", v1.GetURLList)
 		}
 		shorteners := api_v1.Group("/shorteners")
 		{
