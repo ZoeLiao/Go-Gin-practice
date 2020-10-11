@@ -1,5 +1,5 @@
 # Go-Gin-practice
-Gin + Swaggo (Swagger) + gorm (CRUD) + testify + log
+Gin + swag (Swagger) + gorm (CRUD) + testify + log
 
 ## Set up
 - `go run main.go`
@@ -18,7 +18,7 @@ Gin + Swaggo (Swagger) + gorm (CRUD) + testify + log
 
 ## TO-DO List
 - [x] Use [Gin](https://github.com/gin-gonic/gin)
-- [x] Use [Swagger](https://github.com/swaggo/swag)
+- [x] Use [Swag](https://github.com/swaggo/swag)
 - [x] Use [gorm](https://github.com/go-gorm/gorm)
 - [ ] Use [testify](https://github.com/stretchr/testify)
 - [x] Use [logging](https://github.com/op/go-logging)

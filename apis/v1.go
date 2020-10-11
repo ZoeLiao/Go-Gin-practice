@@ -4,6 +4,7 @@ import (
 	"Go-Gin-practice/global"
 	"Go-Gin-practice/models"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"io/ioutil"
 	"net/http"
 )
@@ -19,11 +20,18 @@ func GetURLList(c *gin.Context) {
 	var URLs models.URL
 	res := global.GVA_DB.Find(&URLs)
 	if res.Error != nil {
-		global.GVA_LOG.Error("Error:", res.Error)
-		c.JSON(
-			http.StatusOK,
-			gin.H{"res": "Fialed to get path list", "error": res.Error},
-		)
+		if res.Error == gorm.ErrRecordNotFound {
+			c.JSON(
+				http.StatusOK,
+				gin.H{"res": ""},
+			)
+		} else {
+			global.GVA_LOG.Error("Error:", res.Error)
+			c.JSON(
+				http.StatusOK,
+				gin.H{"res": "Fialed to get path list", "error": res.Error},
+			)
+		}
 		return
 	}
 	c.JSON(
