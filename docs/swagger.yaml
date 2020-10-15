@@ -39,11 +39,10 @@ paths:
       description: test
       parameters:
       - description: url
-        in: body
-        name: message
+        in: formData
+        name: url
         required: true
-        schema:
-          $ref: '#/definitions/models.URL'
+        type: string
       produces:
       - application/json
       responses:

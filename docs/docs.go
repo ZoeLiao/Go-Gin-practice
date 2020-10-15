@@ -36,13 +36,11 @@ var doc = `{
                 ],
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "url",
-                        "name": "message",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.URL"
-                        }
+                        "name": "url",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {

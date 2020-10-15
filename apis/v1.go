@@ -3,6 +3,7 @@ package v1
 import (
 	"Go-Gin-practice/global"
 	"Go-Gin-practice/models"
+	"Go-Gin-practice/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"io/ioutil"
@@ -45,13 +46,12 @@ func GetURLList(c *gin.Context) {
 // @name test name
 // @Accept  json
 // @Produce  json
-// @Param message body models.URL true "url"
+// @Param url formData string true "url"
 // @Success 200 {string} string	"ok"
 // @Router /shortener [post]
 func CreateURL(c *gin.Context) {
 	var URL models.URL
-	c.BindJSON(&URL)
-	url := URL.Url
+	var url = c.PostForm("url") // return nothing
 	notHas := global.GVA_DB.Where("url = ?", url).Find(&URL).RecordNotFound()
 	if !notHas {
 		global.GVA_LOG.Info("url: ", url, " Already exists.")
@@ -81,7 +81,11 @@ func CreateURL(c *gin.Context) {
 			gin.H{"message": err},
 		)
 	} else {
-		err = global.GVA_DB.Create(&URL).Error
+		path := utils.String(5)
+		var urlMap map[string]string
+		urlMap["url"] = url
+		urlMap["path"] = path
+		err = global.GVA_DB.Create(&urlMap).Error
 		if err != nil {
 			global.GVA_LOG.Error(err)
 			c.JSON(
