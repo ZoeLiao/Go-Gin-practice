@@ -1,8 +1,8 @@
 package initialize
 
 import (
-	"Go-Gin-practice/global"
-	"Go-Gin-practice/models"
+	"Go-Gin-practice/backend/global"
+	"Go-Gin-practice/backend/models"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )

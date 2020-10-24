@@ -1,7 +1,7 @@
 package core
 
 import (
-	"Go-Gin-practice/global"
+	"Go-Gin-practice/backend/global"
 	"github.com/op/go-logging"
 	"os"
 )

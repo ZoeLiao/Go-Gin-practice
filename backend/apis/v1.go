@@ -1,9 +1,9 @@
 package v1
 
 import (
-	"Go-Gin-practice/global"
-	"Go-Gin-practice/models"
-	"Go-Gin-practice/utils"
+	"Go-Gin-practice/backend/global"
+	"Go-Gin-practice/backend/models"
+	"Go-Gin-practice/backend/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"io/ioutil"

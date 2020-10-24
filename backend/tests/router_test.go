@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Go-Gin-practice/router"
+	"Go-Gin-practice/backend/router"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
