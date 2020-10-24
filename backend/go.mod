@@ -1,4 +1,4 @@
-module Go-Gin-practice
+module Go-Gin-practice/backend
 
 go 1.12
 
