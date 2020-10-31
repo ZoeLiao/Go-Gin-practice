@@ -29,4 +29,4 @@
 - [gin-vue-admin](https://github.com/flipped-aurora/gin-vue-admin/tree/eb9c3e7d580f54d9dd9c2d5002f10baf35df2abf)
 
 ## Frontend
-- Start a new project from zero: `npx create-react-app <new project> --typescript`
+- Start a new project from zero: `npx create-react-app <new project> --template typescript`
